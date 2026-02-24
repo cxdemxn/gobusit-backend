@@ -38,13 +38,14 @@ The backend also contains the simulation engine used during development before r
 ---
 
 ## 📂 Project Structure
+```text
 /src
-|--/controllers
-|--/services
-|--/repositories
-|--/entities
-|--/simulation
-
+├── /controllers
+├── /services
+├── /repositories
+├── /entities
+└── /simulation
+```
 
 ---
 
