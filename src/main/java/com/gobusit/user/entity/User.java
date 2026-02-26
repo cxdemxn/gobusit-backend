@@ -28,7 +28,10 @@ public class User {
     private String lastName;
 
     @Column(name = "phone_number")
-    private String phone_Number;
+    private String phoneNumber;
+
+    @Column(nullable = false)
+    private String password;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
