@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @Table(name = "schedules")
 public class Schedule {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     @ManyToOne

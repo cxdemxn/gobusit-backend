@@ -13,6 +13,7 @@ import lombok.*;
 @Table(name = "buses")
 public class Bus {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     @Column(unique = true, name = "plate_number")
