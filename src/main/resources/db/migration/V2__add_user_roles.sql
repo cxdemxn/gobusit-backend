@@ -2,9 +2,13 @@
 -- ROLES TABLE
 -- =========================
 CREATE TABLE roles (
-    id VARCHAR(50) PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE
 );
+
+INSERT INTO roles (id, name) VALUES
+('1', 'USER'),
+('2', 'ADMIN');
 
 -- =========================
 -- USER ROLES (many-to-many)
@@ -12,7 +16,7 @@ CREATE TABLE roles (
 CREATE TABLE user_roles (
     id VARCHAR(50) PRIMARY KEY,
     user_id VARCHAR(50) NOT NULL,
-    role_id VARCHAR(50) NOT NULL,
+    role_id INT NOT NULL,
 
     CONSTRAINT fk_userroles_user
         FOREIGN KEY (user_id)

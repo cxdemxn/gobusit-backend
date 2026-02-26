@@ -10,10 +10,14 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "user_roles")
+@Table(
+        name = "user_roles",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "role_id"})
+)
 public class UserRole {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     @ManyToOne

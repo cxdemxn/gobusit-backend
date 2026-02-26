@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 )
 public class Ticket {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     @ManyToOne

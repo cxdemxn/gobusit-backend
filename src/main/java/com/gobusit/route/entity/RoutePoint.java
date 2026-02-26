@@ -12,6 +12,7 @@ import lombok.*;
 @Table(name = "route_points")
 public class RoutePoint {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     @ManyToOne

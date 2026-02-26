@@ -3,9 +3,10 @@ package com.gobusit.user.entity;
 import com.gobusit.role.entity.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,6 +17,7 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     @Column(nullable = false, unique = true)
@@ -33,9 +35,10 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(name = "created_at")
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "user")
-    Set<UserRole> userRoles;
+    List<UserRole> userRoles;
 }
