@@ -3,6 +3,8 @@ package com.gobusit.bus.entity;
 import com.gobusit.common.enums.BusStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.type.PostgreSQLEnumJdbcType;
 
 @Entity
 @Getter
@@ -23,6 +25,7 @@ public class Bus {
     private int capacity;
 
     @Enumerated(EnumType.STRING)
-    @Column
+    @JdbcType(PostgreSQLEnumJdbcType.class)
+    @Column(columnDefinition = "bus_status")
     private BusStatus status;
 }
