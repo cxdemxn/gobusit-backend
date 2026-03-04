@@ -5,6 +5,8 @@ import com.gobusit.common.enums.ScheduleStatus;
 import com.gobusit.route.entity.Route;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.type.PostgreSQLEnumJdbcType;
 
 import java.time.LocalDateTime;
 
@@ -38,6 +40,7 @@ public class Schedule {
     private Double price;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
+    @Column(nullable = false, columnDefinition = "schedule_status")
     private ScheduleStatus status;
 }

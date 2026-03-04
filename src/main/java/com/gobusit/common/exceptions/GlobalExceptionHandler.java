@@ -29,4 +29,9 @@ public class GlobalExceptionHandler {
                 .forEach(e -> errors.put(e.getField(), e.getDefaultMessage()));
         return ResponseEntity.status(400).body(errors);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleBadArgument(IllegalArgumentException ex) {
+        return ResponseEntity.status(400).body(ex.getMessage());
+    }
 }
