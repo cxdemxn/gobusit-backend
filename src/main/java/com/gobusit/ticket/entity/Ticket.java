@@ -5,6 +5,8 @@ import com.gobusit.schedule.entity.Schedule;
 import com.gobusit.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.type.PostgreSQLEnumJdbcType;
 
 import java.time.LocalDateTime;
 
@@ -40,6 +42,7 @@ public class Ticket {
     private LocalDateTime bookingTime;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
+    @Column(nullable = false, columnDefinition = "ticket_status")
     private TicketStatus status;
 }
