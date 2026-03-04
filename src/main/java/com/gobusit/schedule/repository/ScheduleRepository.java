@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -43,5 +44,20 @@ public interface ScheduleRepository extends JpaRepository<Schedule, String> {
             @Param("departureTime") LocalDateTime departureTime,
             @Param("arrivalTime")   LocalDateTime arrivalTime,
             @Param("excludeId")    String excludeId
+    );
+
+     // Browse schedules by origin, destination, and date
+    @Query("""
+        SELECT s FROM Schedule s
+        WHERE (:originName IS NULL OR LOWER(s.route.originName) LIKE LOWER(CONCAT('%', :originName, '%')))
+        AND (:destinationName IS NULL OR LOWER(s.route.destinationName) LIKE LOWER(CONCAT('%', :destinationName, '%')))
+        AND (:date IS NULL OR CAST(s.departureTime AS DATE) = :date)
+        AND s.status NOT IN ('CANCELLED', 'ARRIVED')
+        ORDER BY s.departureTime ASC
+    """)
+    List<Schedule> browseSchedules(
+        @Param("originName")      String originName,
+        @Param("destinationName") String destinationName,
+        @Param("date") LocalDate date
     );
 }
