@@ -4,5 +4,6 @@ public enum ScheduleStatus {
     SCHEDULED,
     BOARDING,
     IN_TRANSIT,
-    ARRIVED
+    ARRIVED,
+    CANCELLED
 }
