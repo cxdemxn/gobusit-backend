@@ -47,17 +47,19 @@ public interface ScheduleRepository extends JpaRepository<Schedule, String> {
     );
 
      // Browse schedules by origin, destination, and date
-    @Query("""
-        SELECT s FROM Schedule s
-        WHERE (:originName IS NULL OR LOWER(s.route.originName) LIKE LOWER(CONCAT('%', :originName, '%')))
-        AND (:destinationName IS NULL OR LOWER(s.route.destinationName) LIKE LOWER(CONCAT('%', :destinationName, '%')))
-        AND (:date IS NULL OR CAST(s.departureTime AS DATE) = :date)
-        AND s.status NOT IN ('CANCELLED', 'ARRIVED')
-        ORDER BY s.departureTime ASC
-    """)
-    List<Schedule> browseSchedules(
-        @Param("originName")      String originName,
-        @Param("destinationName") String destinationName,
-        @Param("date") LocalDate date
-    );
+     @Query(value = """
+    SELECT s.id, s.arrival_time, s.bus_id, s.departure_time, s.price, s.route_id, s.status
+    FROM schedules s
+    JOIN routes r ON r.id = s.route_id
+    WHERE (:originName IS NULL OR LOWER(r.origin_name) LIKE LOWER(CONCAT('%', :originName, '%')))
+    AND (:destinationName IS NULL OR LOWER(r.destination_name) LIKE LOWER(CONCAT('%', :destinationName, '%')))
+    AND (CAST(:date AS date) IS NULL OR DATE(s.departure_time) = CAST(:date AS date))
+    AND s.status NOT IN ('CANCELLED', 'ARRIVED')
+    ORDER BY s.departure_time ASC
+""", nativeQuery = true)
+     List<Schedule> browseSchedules(
+             @Param("originName")      String originName,
+             @Param("destinationName") String destinationName,
+             @Param("date")            String date
+     );
 }

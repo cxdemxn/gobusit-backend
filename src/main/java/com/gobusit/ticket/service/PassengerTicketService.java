@@ -54,6 +54,12 @@ public class PassengerTicketService {
                 "Seat number must be between 1 and " + capacity);
         }
 
+        // Seat must not already be taken by anyone
+        if (ticketRepository.isSeatTaken(req.scheduleId(), req.seatNumber())) {
+            throw new IllegalStateException(
+                    "Seat " + req.seatNumber() + " is already taken. Please choose another seat.");
+        }
+
         // Passenger can't book twice on the same schedule
         if (ticketRepository.existsByUserIdAndScheduleId(user.getId(), req.scheduleId())) {
             throw new IllegalStateException(

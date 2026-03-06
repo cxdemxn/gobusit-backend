@@ -22,7 +22,7 @@ public class PassengerScheduleService {
     public List<ScheduleSummaryResponse> browseSchedules(
             String originName,
             String destinationName,
-            LocalDate date) {
+            String date) {
 
         return scheduleRepository
             .browseSchedules(originName, destinationName, date)

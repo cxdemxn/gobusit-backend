@@ -18,9 +18,9 @@ public class PassengerScheduleController {
 
     @GetMapping
     public List<ScheduleSummaryResponse> browseSchedules(
-            @RequestParam(required = false) String    originName,
-            @RequestParam(required = false) String    destinationName,
-            @RequestParam(required = false) LocalDate date) {
+            @RequestParam(required = false) String originName,
+            @RequestParam(required = false) String destinationName,
+            @RequestParam(required = false) String date) {
         return scheduleService.browseSchedules(originName, destinationName, date);
     }
 

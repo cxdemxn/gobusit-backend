@@ -16,11 +16,13 @@ public interface TicketRepository extends JpaRepository<Ticket, String> {
     List<Ticket> findByUserIdAndStatus(String userId, TicketStatus status);
 
     // Excludes cancelled seats
-    @Query("SELECT t.seatNumber FROM Ticket t WHERE t.schedule.id = :scheduleId AND t.status != 'CANCELLED'")
+    @Query("SELECT t.seatNumber FROM Ticket t WHERE t.schedule.id = :scheduleId AND t.status != 'CANCELLED' AND t" +
+            ".status != 'USED'")
     List<Integer> findTakenSeatsByScheduleId(@Param("scheduleId") String scheduleId);
 
     // Count of active tickets on a schedule
-    @Query("SELECT COUNT(t) FROM Ticket t WHERE t.schedule.id = :scheduleId AND t.status != 'CANCELLED'")
+    @Query("SELECT COUNT(t) FROM Ticket t WHERE t.schedule.id = :scheduleId AND t.status != 'CANCELLED' AND t.status " +
+            "!= 'USED'")
     int countActiveTicketsByScheduleId(@Param("scheduleId") String scheduleId);
 
     // Check if a specific seat is taken
