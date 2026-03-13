@@ -82,6 +82,19 @@ public class AuthService {
                 List.of()
         );
 
-        return new AuthResponse(jwtService.generateToken(userDetails, roles));
+        User userResponse = new User();
+        userResponse.setId(user.getId());
+        userResponse.setFirstName(user.getFirstName());
+        userResponse.setLastName(user.getLastName());
+        userResponse.setEmail(user.getEmail());
+        userResponse.setPhoneNumber(user.getPhoneNumber());
+
+        return new AuthResponse(
+                jwtService.generateToken(userDetails, roles),
+                userResponse,
+                user.getUserRoles().stream()
+                        .map(ur -> ur.getRole().getName())
+                        .toList()
+        );
     }
 }
