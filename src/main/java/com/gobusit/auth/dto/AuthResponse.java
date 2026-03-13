@@ -1,3 +1,11 @@
 package com.gobusit.auth.dto;
 
-public record AuthResponse(String token) {}
+import com.gobusit.user.entity.User;
+
+import java.util.List;
+
+public record AuthResponse(
+        String token,
+        User user,
+        List<String> roles
+) {}
