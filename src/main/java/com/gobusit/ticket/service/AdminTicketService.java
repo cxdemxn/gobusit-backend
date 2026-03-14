@@ -71,8 +71,10 @@ public class AdminTicketService {
                 ticket.getSchedule().getRoute().getOriginName(),
                 ticket.getSchedule().getRoute().getDestinationName(),
                 ticket.getSchedule().getDepartureTime(),
+                ticket.getSchedule().getArrivalTime(),
                 ticket.getSeatNumber(),
                 ticket.getBookingTime(),
+                ticket.getSchedule().getPrice(),
                 ticket.getStatus()
         );
     }
