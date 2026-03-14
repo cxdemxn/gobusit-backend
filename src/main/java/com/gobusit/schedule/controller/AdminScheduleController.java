@@ -30,8 +30,10 @@ public class AdminScheduleController {
     @GetMapping
     public List<ScheduleResponse> getAllSchedules(
             @RequestParam(required = false) String         routeId,
-            @RequestParam(required = false) ScheduleStatus status) {
-        return scheduleService.findAll(routeId, status);
+            @RequestParam(required = false) ScheduleStatus status,
+            @RequestParam(required = false) String date
+    ) {
+        return scheduleService.findAll(routeId, status, date);
     }
 
     @GetMapping("/{id}")

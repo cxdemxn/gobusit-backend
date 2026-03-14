@@ -55,23 +55,15 @@ public class ScheduleService {
 
     // ── Read ─────────────────────────────────────────────────
 
-    public List<ScheduleResponse> findAll(String routeId, ScheduleStatus status) {
-        List<Schedule> results;
-
-        if (routeId != null && status != null) {
-            results = scheduleRepository.findByRouteId(routeId)
-                    .stream()
-                    .filter(s -> s.getStatus() == status)
-                    .toList();
-        } else if (routeId != null) {
-            results = scheduleRepository.findByRouteId(routeId);
-        } else if (status != null) {
-            results = scheduleRepository.findByStatus(status);
-        } else {
-            results = scheduleRepository.findAll();
-        }
-
-        return results.stream().map(this::toResponse).toList();
+    public List<ScheduleResponse> findAll(String routeId, ScheduleStatus status, String date) {
+        return scheduleRepository.findAdminSchedules(
+                        routeId,
+                        status != null ? status.name() : null,
+                        date
+                )
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
     public ScheduleResponse findById(String id) {
