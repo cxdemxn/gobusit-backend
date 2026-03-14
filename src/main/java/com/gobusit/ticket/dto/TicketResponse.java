@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 public record TicketResponse(
     String       id,
     String       userId,
-    String       userEmail,
+    String       userPhoneNumber,
     String       scheduleId,
     String       originName,
     String       destinationName,
