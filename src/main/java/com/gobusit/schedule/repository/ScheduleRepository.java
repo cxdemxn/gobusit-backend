@@ -62,4 +62,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, String> {
              @Param("destinationName") String destinationName,
              @Param("date")            String date
      );
+
+    @Query("SELECT s FROM Schedule s WHERE s.departureTime BETWEEN :start AND :end ORDER BY s.departureTime ASC")
+    List<Schedule> findSchedulesToday(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 }

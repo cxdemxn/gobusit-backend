@@ -34,4 +34,6 @@ public interface TicketRepository extends JpaRepository<Ticket, String> {
 
     // Check if passenger already has a ticket on this schedule
     boolean existsByUserIdAndScheduleId(String userId, String scheduleId);
+
+    long countByStatus(TicketStatus status);
 }
