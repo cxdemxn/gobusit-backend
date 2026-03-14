@@ -11,6 +11,7 @@ import com.gobusit.schedule.dto.ScheduleResponse;
 import com.gobusit.schedule.dto.UpdateScheduleRequest;
 import com.gobusit.schedule.entity.Schedule;
 import com.gobusit.schedule.repository.ScheduleRepository;
+import com.gobusit.ticket.repository.TicketRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final BusRepository busRepository;
     private final RouteRepository routeRepository;
+    private final TicketRepository ticketRepository;
 
     // ── Create ───────────────────────────────────────────────
 
@@ -172,7 +174,9 @@ public class ScheduleService {
                 schedule.getDepartureTime(),
                 schedule.getArrivalTime(),
                 schedule.getPrice(),
-                schedule.getStatus()
+                schedule.getStatus(),
+                ticketRepository.countActiveTicketsByScheduleId(schedule.getId()),
+                schedule.getBus().getCapacity()
         );
     }
 }
