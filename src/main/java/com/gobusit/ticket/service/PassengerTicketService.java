@@ -61,9 +61,9 @@ public class PassengerTicketService {
         }
 
         // Passenger can't book twice on the same schedule
-        if (ticketRepository.existsByUserIdAndScheduleId(user.getId(), req.scheduleId())) {
+        if (ticketRepository.hasActiveTicketForSchedule(user.getId(), req.scheduleId())) {
             throw new IllegalStateException(
-                "You already have a ticket for this schedule");
+                    "You already have a ticket for this schedule");
         }
 
         // Check no available seats remain

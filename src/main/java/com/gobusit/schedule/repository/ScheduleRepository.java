@@ -62,4 +62,21 @@ public interface ScheduleRepository extends JpaRepository<Schedule, String> {
              @Param("destinationName") String destinationName,
              @Param("date")            String date
      );
+
+    @Query("SELECT s FROM Schedule s WHERE s.departureTime BETWEEN :start AND :end ORDER BY s.departureTime ASC")
+    List<Schedule> findSchedulesToday(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+
+    @Query(value = """
+    SELECT s.id, s.arrival_time, s.bus_id, s.departure_time, s.price, s.route_id, s.status
+    FROM schedules s
+    WHERE (:routeId IS NULL OR s.route_id = :routeId)
+    AND (:status IS NULL OR s.status::text = :status)
+    AND (CAST(:date AS date) IS NULL OR DATE(s.departure_time) = CAST(:date AS date))
+    ORDER BY s.departure_time ASC
+""", nativeQuery = true)
+    List<Schedule> findAdminSchedules(
+            @Param("routeId") String routeId,
+            @Param("status") String status,
+            @Param("date") String date
+    );
 }

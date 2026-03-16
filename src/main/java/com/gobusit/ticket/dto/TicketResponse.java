@@ -5,14 +5,18 @@ import com.gobusit.common.enums.TicketStatus;
 import java.time.LocalDateTime;
 
 public record TicketResponse(
-    String       id,
-    String       userId,
-    String       userEmail,
-    String       scheduleId,
-    String       originName,
-    String       destinationName,
-    LocalDateTime departureTime,
-    int          seatNumber,
-    LocalDateTime bookingTime,
-    TicketStatus status
+        String        id,
+        String        userId,
+        String        userFirstName,
+        String        userLastName,
+        String        userPhoneNumber,
+        String        scheduleId,
+        String        originName,
+        String        destinationName,
+        LocalDateTime departureTime,
+        LocalDateTime arrivalTime,
+        int           seatNumber,
+        LocalDateTime bookingTime,
+        double        price,
+        TicketStatus  status
 ) {}

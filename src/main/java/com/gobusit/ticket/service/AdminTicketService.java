@@ -66,13 +66,17 @@ public class AdminTicketService {
         return new TicketResponse(
                 ticket.getId(),
                 ticket.getUser().getId(),
-                ticket.getUser().getEmail(),
+                ticket.getUser().getFirstName(),
+                ticket.getUser().getLastName(),
+                ticket.getUser().getPhoneNumber(),
                 ticket.getSchedule().getId(),
                 ticket.getSchedule().getRoute().getOriginName(),
                 ticket.getSchedule().getRoute().getDestinationName(),
                 ticket.getSchedule().getDepartureTime(),
+                ticket.getSchedule().getArrivalTime(),
                 ticket.getSeatNumber(),
                 ticket.getBookingTime(),
+                ticket.getSchedule().getPrice(),
                 ticket.getStatus()
         );
     }

@@ -11,6 +11,7 @@ import com.gobusit.schedule.dto.ScheduleResponse;
 import com.gobusit.schedule.dto.UpdateScheduleRequest;
 import com.gobusit.schedule.entity.Schedule;
 import com.gobusit.schedule.repository.ScheduleRepository;
+import com.gobusit.ticket.repository.TicketRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final BusRepository busRepository;
     private final RouteRepository routeRepository;
+    private final TicketRepository ticketRepository;
 
     // ── Create ───────────────────────────────────────────────
 
@@ -53,23 +55,15 @@ public class ScheduleService {
 
     // ── Read ─────────────────────────────────────────────────
 
-    public List<ScheduleResponse> findAll(String routeId, ScheduleStatus status) {
-        List<Schedule> results;
-
-        if (routeId != null && status != null) {
-            results = scheduleRepository.findByRouteId(routeId)
-                    .stream()
-                    .filter(s -> s.getStatus() == status)
-                    .toList();
-        } else if (routeId != null) {
-            results = scheduleRepository.findByRouteId(routeId);
-        } else if (status != null) {
-            results = scheduleRepository.findByStatus(status);
-        } else {
-            results = scheduleRepository.findAll();
-        }
-
-        return results.stream().map(this::toResponse).toList();
+    public List<ScheduleResponse> findAll(String routeId, ScheduleStatus status, String date) {
+        return scheduleRepository.findAdminSchedules(
+                        routeId,
+                        status != null ? status.name() : null,
+                        date
+                )
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
     public ScheduleResponse findById(String id) {
@@ -172,7 +166,9 @@ public class ScheduleService {
                 schedule.getDepartureTime(),
                 schedule.getArrivalTime(),
                 schedule.getPrice(),
-                schedule.getStatus()
+                schedule.getStatus(),
+                ticketRepository.countActiveTicketsByScheduleId(schedule.getId()),
+                schedule.getBus().getCapacity()
         );
     }
 }

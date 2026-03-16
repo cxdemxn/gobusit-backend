@@ -14,5 +14,7 @@ public record ScheduleResponse(
     LocalDateTime departureTime,
     LocalDateTime  arrivalTime,
     double         price,
-    ScheduleStatus status
+    ScheduleStatus status,
+    int bookedSeats,
+    int totalSeats
 ) {}

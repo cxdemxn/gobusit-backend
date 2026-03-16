@@ -32,6 +32,10 @@ public interface TicketRepository extends JpaRepository<Ticket, String> {
     // Passenger's own tickets
     List<Ticket> findByUserIdOrderByBookingTimeDesc(String userId);
 
-    // Check if passenger already has a ticket on this schedule
-    boolean existsByUserIdAndScheduleId(String userId, String scheduleId);
+    // Check if passenger already has an active ticket on this schedule
+    // With this:
+    @Query("SELECT COUNT(t) > 0 FROM Ticket t WHERE t.user.id = :userId AND t.schedule.id = :scheduleId AND t.status = 'BOOKED'")
+    boolean hasActiveTicketForSchedule(@Param("userId") String userId, @Param("scheduleId") String scheduleId);
+
+    long countByStatus(TicketStatus status);
 }
