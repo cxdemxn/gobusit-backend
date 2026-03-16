@@ -66,6 +66,8 @@ public class AdminTicketService {
         return new TicketResponse(
                 ticket.getId(),
                 ticket.getUser().getId(),
+                ticket.getUser().getFirstName(),
+                ticket.getUser().getLastName(),
                 ticket.getUser().getPhoneNumber(),
                 ticket.getSchedule().getId(),
                 ticket.getSchedule().getRoute().getOriginName(),
