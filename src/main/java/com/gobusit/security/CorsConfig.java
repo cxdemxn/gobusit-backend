@@ -15,9 +15,7 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                 .allowedOrigins(
                         "http://localhost:5173",
-                        "http://localhost:19006",
-                        "http://192.168.1.10:8081",
-                        "http://192.168.1.10:19006"
+                        "https://gobusit-app.vercel.app"
                 )
                 .allowCredentials(true)
                 .maxAge(3600);
