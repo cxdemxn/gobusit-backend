@@ -16,7 +16,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, String> {
     List<Schedule> findByBusId(String busId);
     List<Schedule> findByStatus(ScheduleStatus status);
 
-    // Overlap check — does this bus have a conflicting schedule?
+    // overlap check — does this bus have a conflicting schedule?
     @Query("""
         SELECT COUNT(s) > 0 FROM Schedule s
         WHERE s.bus.id = :busId
@@ -30,7 +30,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, String> {
             @Param("arrivalTime") LocalDateTime arrivalTime
     );
 
-    // Same but exclude a specific schedule (for updates)
+    // same but exclude a specific schedule (for updates)
     @Query("""
         SELECT COUNT(s) > 0 FROM Schedule s
         WHERE s.bus.id = :busId
@@ -46,7 +46,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, String> {
             @Param("excludeId")    String excludeId
     );
 
-     // Browse schedules by origin, destination, and date
+     // browse schedules by origin, destination, and date
      @Query(value = """
     SELECT s.id, s.arrival_time, s.bus_id, s.departure_time, s.price, s.route_id, s.status
     FROM schedules s
@@ -78,5 +78,21 @@ public interface ScheduleRepository extends JpaRepository<Schedule, String> {
             @Param("routeId") String routeId,
             @Param("status") String status,
             @Param("date") String date
+    );
+
+    // finds the furthest future trip for a given template (used by nightly job)
+    @Query("SELECT MAX(s.departureTime) FROM Schedule s WHERE s.scheduleTemplate.id = :templateId")
+    java.time.LocalDateTime findLatestDepartureDateByTemplateId(@Param("templateId") String templateId);
+
+    // check if a trip already exists for this template on this specific date
+// prevents duplicates during generation
+    @Query("""
+    SELECT COUNT(s) > 0 FROM Schedule s
+    WHERE s.scheduleTemplate.id = :templateId
+    AND CAST(s.departureTime AS date) = CAST(:date AS date)
+""")
+    boolean existsByTemplateIdAndDate(
+            @Param("templateId") String templateId,
+            @Param("date")       java.time.LocalDate date
     );
 }
