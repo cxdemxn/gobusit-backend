@@ -48,7 +48,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, String> {
 
      // browse schedules by origin, destination, and date
      @Query(value = """
-    SELECT s.id, s.arrival_time, s.bus_id, s.departure_time, s.price, s.route_id, s.status
+    SELECT s.id, s.arrival_time, s.bus_id, s.departure_time, s.price, s.route_id, s.status, s.schedule_template_id
     FROM schedules s
     JOIN routes r ON r.id = s.route_id
     WHERE (:originName IS NULL OR LOWER(r.origin_name) LIKE LOWER(CONCAT('%', :originName, '%')))
