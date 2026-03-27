@@ -23,6 +23,10 @@ public class Schedule {
     private String id;
 
     @ManyToOne
+    @JoinColumn(name = "schedule_template_id")
+    private ScheduleTemplate scheduleTemplate;
+
+    @ManyToOne
     @JoinColumn(name = "route_id", nullable = false)
     private Route route;
 
@@ -43,8 +47,4 @@ public class Schedule {
     @JdbcType(PostgreSQLEnumJdbcType.class)
     @Column(nullable = false, columnDefinition = "schedule_status")
     private ScheduleStatus status;
-
-    @ManyToOne
-    @JoinColumn(name = "schedule_template_id")
-    private ScheduleTemplate scheduleTemplate;
 }
