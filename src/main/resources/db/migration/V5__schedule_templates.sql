@@ -4,8 +4,8 @@
 TRUNCATE tickets CASCADE; 
 TRUNCATE schedules CASCADE;
 
--- Create schedule_templates FIRST 
-(schedules will reference it) CREATE TABLE 
+-- Create schedule_templates FIRST (schedules will reference it)
+CREATE TABLE
 schedule_templates (
     id VARCHAR(50) PRIMARY KEY, 
     route_id VARCHAR(50) NOT NULL,
