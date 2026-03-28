@@ -21,12 +21,6 @@ public class AdminScheduleController {
 
     private final ScheduleService scheduleService;
 
-    @PostMapping
-    public ResponseEntity<ScheduleResponse> createSchedule(
-            @RequestBody @Valid CreateScheduleRequest req) {
-        return ResponseEntity.status(201).body(scheduleService.createSchedule(req));
-    }
-
     @GetMapping
     public List<ScheduleResponse> getAllSchedules(
             @RequestParam(required = false) String         routeId,
